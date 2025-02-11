@@ -4,36 +4,33 @@ import axios from 'axios'
 
 function App() {
   const [response, setResponse] = useState([])
-  
+  const [name, setName] = useState("")
+  const [age, setAge] = useState("")
+
+  const apiUrl = import.meta.env.VITE_API_URL
+
+
   const fetchdata = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL
-    console.log(apiUrl);
     const res = await axios.get(`${apiUrl}/soumi`)
-    console.log(res.data);
     setResponse(res.data)
   };
 
   const submitdata = async () => {
-    const apiUrl = import.meta.env.VITE_API_URL
-    const res = await axios.post(`${apiUrl}/soumi, { name ,age : Number(age)}`);
-
-    console.log("user data", res.data);
-
-    fetchdata();
-
-    setName("");
-    setAge("");
+    const res = await axios.post(`${apiUrl}/soumi`, { name ,age })
+    setName("")
+    setAge("")
   };
   return (
     <>
-      <button onClick={fetchdata}>hello</button>
-      {response.map((user)=>(
-        <h1>{user.age}</h1>
-))}
-   <label>Details</label>
-   <input type="text" placeholder="Enter your name" />
-   <input type="text" placeholder="Enter your age" />
-   <button onClick={submitdata}>Submit</button>
+      <button onClick={fetchdata}>Fetch</button>
+      {response.map((Data) => (
+        <h1>{Data.name}</h1>
+      ))}
+
+      <label>Details</label>
+      <input type="text" onChange={(e)=>{setName(e.target.value)}}  placeholder="Enter your name" />
+      <input type="number" onChange={(e)=>{setAge(e.target.value)}} placeholder="Enter your age" />
+      <button onClick={submitdata}>Submit</button>
     </>
   )
 
