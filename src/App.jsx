@@ -1,14 +1,15 @@
 import './App.css'
 import { useState } from 'react'
 import axios from 'axios'
-import { config} from 'dotenv'
-config()
+
 function App() {
   const [response, setResponse] = useState('')
   
   const fetchdata = async () => {
-     const response = await axios.get(`${process.env.REACT_APP_API_URL}/soumi`)
-    setResponse(response.data)
+    const apiUrl = import.meta.env.VITE_API_URL
+    console.log(apiUrl);
+    const res = await axios.get(`${apiUrl}/soumi`)
+    setResponse(res.data)
   }
   return (
     <>
